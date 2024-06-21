@@ -1,6 +1,6 @@
-# Trabalho Prático 3 de AEDS3!
+# Trabalho Prático 4 de AEDS3!
 
-Para esse trabalho, implementamos backups compactados pelo algoritmo LZW no código do TP2 
+Para esse trabalho, implementamos codificação de colunas e de Vigenère no código do TP3 
 
 **Alunos do Grupo:** 
 * Luiza Dias Corteletti &nbsp;
@@ -10,48 +10,34 @@ Para esse trabalho, implementamos backups compactados pelo algoritmo LZW no cód
 
 # Métodos e Classes Criadas
 
-**readISBN(String ISBN):** Método que recebe uma string ISBN e retorna um Livro ou NULL com base nessa string
+**vigenereCod:** Recebe o vetor de dados a ser codificado e a chave de codificação. Realiza a codificação de Vigenère por meio do módulo da soma do valor do dado e da chave. Retorna o vetor de dados codificado. 
 
-**open():** Método que reabre os arquivos principais (fechamos os arquivos durante os processos de backup)
+**vigenereDecod:** Recebe o vetor de dados a ser decodificado e a chave de codificação. Realiza a decodificação pela equação matemática de módulo de 256 do valor do dado - valor da chave + 256. Retorna o vetor de dados decodificado. 
 
-**BackUp(int versao, String arq):** Método do backup propriamente dito, recebe a versão do backup e a string com o nome do arquivo a ser compactado, ele lê 100 bytes do arquivo, os codifica e escreve o tamanho da mensagem codificada em uma short e depois escreve a mensagem codificada no arquivo de backup, depois ele repete o processo com os proximos 100 bytes, continuando até o fim do arquivo.
+**insertionSort:**  Ordena as colunas da matriz da cifra de colunas em ordem crescente se baseando nas letras da chave. 
 
-OBS.: Se o tamanho restante do arquivo for menor que 100 Bytes, é criado um array de tamanho igual ao tamanho restante
+**colunasCod:** Recebe o vetor de dados a ser codificado e a chave de codificação. Coloca os dados em uma matriz e depois os lê na ordem das chaves recolocando-os no vetor e o retornando. 
 
-OBS2.: A variavel **TAMANHO_BYTES_BACKUP** armazena a quantidade de bytes pegos por vez (Está setada como 100 bytes)
+**colunasDecod:** Recebe o vetor de dados a ser decodificado e a chave de codificação. Coloca os dados nas colunas da matriz e os lê na ordem horizontal retornando os dados decodificados. 
 
-**AtualizaVersao():** Método que pega a última versão de backup do arquivo index.db e atualiza para a nova versão, retornando a nova versão
+**printB:** Recebe um vetor de dados e os imprime.
 
-**fazBackUp():** método fecha todos os arquivos abertos, depois executa o metodo **AtualizaVersao()** para conseguir a versão de backup mais recente e depois executa **BackUp(int versao, String arq)** para cada arquivo do banco de dados, por fim, ele reabre os arquivos fechados anteriormente 
+**cod:** Codifica os dados os enviando primeiro para a função de codificação de Vigenère e depois para a função de codificação em colunas, imprimindo e retornando o resultado no final.
 
-**pegaVersao():** Retorna a última versão de backup, salva no index.db
+**decod:** Decodifica os dados os enviando primeiro para a função de codificação em colunas e depois para a função de codificação de Vigenère, imprimindo e retornando o resultado no final.
 
-**DecodificaBackUp(int versao, String arq):** Deleta o arquivo do banco de dados com o nome da varaivel **arq**, depois lê o arquivo de backup com o mesmo nome, primeiramente ele pega o tamanho da mensagem codificada, cria um array de bytes com esse tamanho e lê o arquivo até enche-lo, depois decodifica a mensagem e salva no arquivo do banco de dados padrão
-
-**decodificaBackUp(int versao):** Fecha os arquivos abertos atualmente, depois executa **pegaVersao()** para conseguir a ultima versão do backup, se a versão recebida por parametro foi menor que 1 ou maior que a  versão recebida por **pegaVersao()**, ele printa no console "VERSAO NAO ENCONTRADA". Caso o parametro recebido seja valido, ele executa **DecodificaBackUp(int versao, String arq)** para cada arquivo do banco de dados e, por fim, reabre os arquivos.
-
+**Mudanças em toByteArray e fromByteArray** Agoras as funções são responsáveis por chamar a função de codificação e decodificação respectivamente, salvando no arquivo apenas a versão codificada dos dados. 
 
 
 ## Perguntas
 
-**-   Há uma rotina de compactação usando o algoritmo LZW para fazer backup dos arquivos?**
+**- Há uma função de cifragem em todas as classes de entidades, envolvendo pelo menos duas operações diferentes e usando uma chave criptográfica?**
 
-Sim, usamos o algortimo LZW feito em sala para compactar o backup dos arquivos
+Sim, todas as classes de entidades passam pela função de cifragem e decifragem, passando por duas operações diferentes (Veginère e Colunas) com a mesma chave. 
 
-**-   Há uma rotina de descompactação usando o algoritmo LZW para recuperação dos arquivos?**
+**- Uma das operações de cifragem é baseada na substituição e a outra na transposição?**
 
-Sim, usamos o algortimo LZW feito em sala para descompactar o backup dos arquivos
-
-**-   O usuário pode escolher a versão a recuperar?**
-
-Sim, o usuário pode digitar a versão que ele deseja recuperar, as versões são sequenciais e a versão mais recente é salva em uma short no arquivo index.db dentro da pasta backup
-
-**-   Qual foi a taxa de compressão alcançada por esse backup? (Compare o tamanho dos arquivos compactados com os arquivos originais)**
-
-Temos um teste do backup disponibilizado na execução padrão de comandos ( Selecionada no programa atualmente, para mudar para a versão de menu, comente a chamada dos comandos e remova o // do método menu() ).
-Nesse teste conseguimos uma diferença de 71 bytes, onde os arquivos originais pesaram 871 bytes e os de backup 800 bytes (Contando com o arquivo index.db)
-
-![Imagem de Comparacao](https://github.com/DiegoMarchioni/TP3AED3/blob/main/ComparacaoBACKUPeNORMAL.png)
+Sim, são usadas a cifra de Veginère (substituição) e cifra de colunas (transposição).
 
 **-   O trabalho está funcionando corretamente?**
 
@@ -59,7 +45,7 @@ Sim, o trabalho está funcionando
 
 **-   O trabalho está completo?**
 
-Sim, o trabalho cumpre todos os requisitos do TP3
+Sim, o trabalho cumpre todos os requisitos do TP4
 
 **-   O trabalho é original e não a cópia de um trabalho de um colega?**
 
@@ -67,7 +53,7 @@ Sim, fizemos o trabalho com base no nosso TP2 e no material disponibilizado em s
 
 
 
-# Métodos que estavam no TP2
+# Métodos que estavam no TP3
 
 **Menu na Main:** Menu na main que opera pela estrutura condicional switch case no console dando as opções de: inserir novo registro, buscar uma chave, deletar um registro e atualizar um registro para o usuário.
 ATENÇÃO!!! A opção do menu não lida muito bem com acentuação, adicionamos um procedimento para execução dos comandos normalmente (sem menu)
@@ -105,3 +91,26 @@ Fazemos a união do conjunto 1 e 4 com o conjunto de Estrutura, resultando no li
 **Método getStopwords na classe ArquivoLivros:** Baixamos um dataset com inúmeras stopwords (em português) do site Kaggle (https://www.kaggle.com/datasets/heeraldedhia/stop-words-in-28-languages), a função getStopwords pega todas as Stopwords no arquivo baixado e coloca em um ArrayList
 
 **Método DEBUG:** Um método que criamos para printar todos os registros no arquivo principal e na lista invertido, só para ter certeza que está tudo nos conformes
+
+**readISBN(String ISBN):** Método que recebe uma string ISBN e retorna um Livro ou NULL com base nessa string
+
+**open():** Método que reabre os arquivos principais (fechamos os arquivos durante os processos de backup)
+
+**BackUp(int versao, String arq):** Método do backup propriamente dito, recebe a versão do backup e a string com o nome do arquivo a ser compactado, ele lê 100 bytes do arquivo, os codifica e escreve o tamanho da mensagem codificada em uma short e depois escreve a mensagem codificada no arquivo de backup, depois ele repete o processo com os proximos 100 bytes, continuando até o fim do arquivo.
+
+OBS.: Se o tamanho restante do arquivo for menor que 100 Bytes, é criado um array de tamanho igual ao tamanho restante
+
+OBS2.: A variavel **TAMANHO_BYTES_BACKUP** armazena a quantidade de bytes pegos por vez (Está setada como 100 bytes)
+
+**AtualizaVersao():** Método que pega a última versão de backup do arquivo index.db e atualiza para a nova versão, retornando a nova versão
+
+**fazBackUp():** método fecha todos os arquivos abertos, depois executa o metodo **AtualizaVersao()** para conseguir a versão de backup mais recente e depois executa **BackUp(int versao, String arq)** para cada arquivo do banco de dados, por fim, ele reabre os arquivos fechados anteriormente 
+
+**pegaVersao():** Retorna a última versão de backup, salva no index.db
+
+**DecodificaBackUp(int versao, String arq):** Deleta o arquivo do banco de dados com o nome da varaivel **arq**, depois lê o arquivo de backup com o mesmo nome, primeiramente ele pega o tamanho da mensagem codificada, cria um array de bytes com esse tamanho e lê o arquivo até enche-lo, depois decodifica a mensagem e salva no arquivo do banco de dados padrão
+
+**decodificaBackUp(int versao):** Fecha os arquivos abertos atualmente, depois executa **pegaVersao()** para conseguir a ultima versão do backup, se a versão recebida por parametro foi menor que 1 ou maior que a  versão recebida por **pegaVersao()**, ele printa no console "VERSAO NAO ENCONTRADA". Caso o parametro recebido seja valido, ele executa 
+
+**DecodificaBackUp(int versao, String arq)** para cada arquivo do banco de dados e, por fim, reabre os arquivos.
+
